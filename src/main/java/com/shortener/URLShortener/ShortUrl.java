@@ -6,7 +6,7 @@ public class ShortUrl{
 
     // GET url
 	public String getFull(){ return this.full_url; }
-    public String getShort() { return this.short_url; }
+	public String getShort() { return this.short_url; }
 
     // SET url
 	public void setFull(String full_url) { this.full_url = full_url; }

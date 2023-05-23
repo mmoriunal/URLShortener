@@ -5,13 +5,18 @@ import java.util.Random;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity; // Respuesta HTTP que se enviará al cliente desde un controlador.
+
+import java.io.IOException;
 import java.net.MalformedURLException; // Error en caso la url este incorrecta y no arroje algún vinculo 
 
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody; // Importa @RequestBody
 import org.springframework.web.bind.annotation.RequestMapping; // Importa @RequestMapping
 import org.springframework.web.bind.annotation.RestController; // Importa @RestController
+import org.springframework.web.bind.annotation.RequestMethod; // RequestMethod.POST (enviar información al servidor) / .GET (recibir)
 
-import org.springframework.web.bind.annotation.RequestMethod; // RequestMethod.POST (enviar información al servidor)
+import jakarta.servlet.http.HttpServletResponse;
+
 
 @RestController
 public class UrlRestController {
@@ -38,6 +43,12 @@ public class UrlRestController {
 		return new ResponseEntity<Object>(shorturl, HttpStatus.OK); // HttpStatus.OK para indicar que la solicitud se ha procesado correctamente.
 	}
 
+	@RequestMapping(value="/s/{randomstring}", method=RequestMethod.GET)
+	public void getFullUrl(HttpServletResponse response, @PathVariable("randomstring") String randomString) throws IOException{
+		response.sendRedirect(shorturlList.get(randomString).getFull());
+	}
+
+ 
     // Generador de cadenas alfanumericas aleatorias.
 	private String randChar() {
 		String str = ""; Random r = new Random();

@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.RequestMethod; //RequestMethod to
 
 @Controller
 public class UrlController {
-	
+
 	/* Implementar REQUESTMAPPING  -   Default PATH:  value = '/' */
-	@RequestMapping(value="/", method=RequestMethod.GET)  //SpringBoot Method
+	@RequestMapping(value="/", method = RequestMethod.GET)  //SpringBoot Method
 	public String loadIndex() {
 		return "index"; // Retorna el nombre de una vista (HTML template) a mostrar
 	}
