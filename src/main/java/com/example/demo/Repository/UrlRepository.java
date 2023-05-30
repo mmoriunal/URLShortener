@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.Model.Url;
 
 @Repository                   // < Entidad a buscar, tipo de identificador (key) >
-public interface UrlRepository extends JpaRepository<Url,Long> {
+public interface UrlRepository extends JpaRepository<Url, Long> {
 
     // Cuando se llama a este método, Spring Data JPA generará automáticamente una consulta SQL 
     public Url findByShortLink(String shortLink);

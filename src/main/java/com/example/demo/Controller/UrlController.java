@@ -27,16 +27,16 @@ import jakarta.servlet.http.HttpServletResponse;
 @RestController
 public class UrlController {
     @Autowired // Una forma facil de acceder a los metodos de otras clases en escencia.
-    private UrlService UrlService;
+    private UrlService urlService;
     
 
     // Enviar UrlOriginal y producir ShortUrl
 
     @PostMapping("/ezlink") // Se define la ruta especifica cuyas Solicitudes POST seran manejadas por el metodo
-    public ResponseEntity<?> generateShortLink(@RequestBody UrlDTO UrlDTO){
+    public ResponseEntity<?> generateShortLink(@RequestBody UrlDTO urlDTO){
     // @RequestBody indica que el objeto UrlDTO sera vinculado como parametro al cuerpo de la solicitud HTTP que estoy enviando. 
 
-        if (StringUtils.isBlank(UrlDTO.getUrl()) ){ 
+        if (StringUtils.isBlank(urlDTO.getUrl()) ){ 
             ErrorDTO error = new ErrorDTO();
             error.setError("Algo no funciona. Porfavor verifique que la URL sea valida :)");
             error.setStatus("HTTP 404 Not Found");
@@ -44,12 +44,13 @@ public class UrlController {
         }
 
         //No uso @Autowired para UrlDTO porque necesito una instancia per se para recibir como respuesta.
-        Url responseUrl = UrlService.generateShortLink(UrlDTO); 
+        Url responseUrl = urlService.generateShortLink(urlDTO); 
+        String title = responseUrl.getTitle();    
         String original = responseUrl.getOriginalUrl();
         String shortUrl = "http://localhost:8080/" + responseUrl.getShortLink();
         LocalDateTime exp = responseUrl.getExpirationDate();
 
-        ResponseDTO response = new ResponseDTO(original, shortUrl, exp); 
+        ResponseDTO response = new ResponseDTO(title, original, shortUrl, exp); 
         // HttpStatus.OK indica si la solicitud se procesó correctamente
         return new ResponseEntity<ResponseDTO>(response, HttpStatus.OK); 
     }
@@ -62,7 +63,7 @@ public class UrlController {
         // HttpServletResponse interfaz para las respuestas enviadas de un Servidor a un Cliente.
         // sendRedirect(String location): Redirige al cliente a otra URL especificada.
 
-        Url response = UrlService.findOriginal(codigo); LocalDateTime hoy = LocalDateTime.now();
+        Url response = urlService.findOriginal(codigo); LocalDateTime hoy = LocalDateTime.now();
         ErrorDTO error = new ErrorDTO(); String status = "HTTP 400 Bad Request";
         
 
@@ -76,7 +77,7 @@ public class UrlController {
             error.setError("Link caducado. Porfavor cree uno nuevo :)");
             error.setStatus(status);
 
-            UrlService.deleteShortLink(response); //Eliminar link caducado
+            urlService.deleteShortLink(response); //Eliminar link caducado
 
             return new ResponseEntity<ErrorDTO>(error, HttpStatus.OK);
         }

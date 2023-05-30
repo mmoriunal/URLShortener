@@ -42,8 +42,7 @@ public class UrlServiceIMP implements UrlService { // Uso esta clase para implem
         return  codigo;
     }
 
-    private LocalDateTime deffExpiration(String expirationDate, LocalDateTime creationDate)
-    {
+    private LocalDateTime deffExpiration(String expirationDate, LocalDateTime creationDate) {
         if( StringUtils.isBlank(expirationDate) ){ return creationDate.plusHours(72); }
         // Si no se define una exp.date, se definen 3d por defecto.
 
@@ -54,16 +53,17 @@ public class UrlServiceIMP implements UrlService { // Uso esta clase para implem
 
     // Funciones definidas en la Clase de SERVICIO (UrlService)
     @Override
-    public Url generateShortLink(UrlDTO UrlDTO) { //UrlDTO -> OriginalUrl
+    public Url generateShortLink(UrlDTO urlDTO) { //UrlDTO -> OriginalUrl
 
-        if( StringUtils.isNotBlank(UrlDTO.getUrl()) ) //Evalúa si es un whitespace, es nulo o está vacío ("").
+        if( StringUtils.isNotBlank(urlDTO.getUrl()) ) //Evalúa si es un whitespace, es nulo o está vacío ("").
         {
-            String codigo = encodeUrl(UrlDTO.getUrl()); // Primero saco el codigo a asociar.
+            String codigo = encodeUrl(urlDTO.getUrl()); // Primero saco el codigo a asociar.
 
             Url url = new Url();
             url.setCreationDate(LocalDateTime.now());  
-            url.setExpirationDate( deffExpiration( UrlDTO.getExpirationDate(), url.getCreationDate() ) );
-            url.setOriginalUrl(UrlDTO.getUrl()); 
+            url.setExpirationDate( deffExpiration( urlDTO.getExpirationDate(), url.getCreationDate() ) );
+            url.setOriginalUrl(urlDTO.getUrl());
+            url.setTitle(urlDTO.getTitle());
             url.setShortLink(codigo); // Luego defino la fila a insertar en la Base
             
             Url responseUrl = saveinDB(url); // Por ultimo envio la Url a la DB.

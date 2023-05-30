@@ -20,17 +20,19 @@ ser mapeada a una tabla en la base de datos. [Java Persistence API (JPA)]
 public class Url { // Usare esta clase para alimentar la Base ya con el LinkOriginal asociado a un ShortLink (GET)
     // Llave primaria generada automaticamente (creciente)
     @Id 
-    @GeneratedValue 
+    @GeneratedValue
     private long id;
 
     @Lob // Atributos de una entidad que deben ser tratados como un objeto grande.
+    private String title;
     private String originalUrl;
     private String shortLink;
     private LocalDateTime creationDate;
     private LocalDateTime expirationDate;
 
 
-    public Url(long id, String originalUrl, String shortLink, LocalDateTime creationDate, LocalDateTime expirationDate) {
+    public Url(String title, long id, String originalUrl, String shortLink, LocalDateTime creationDate, LocalDateTime expirationDate) {
+        this.title = title;
         this.id = id; this.originalUrl = originalUrl; this.shortLink = shortLink;
         this.creationDate = creationDate; this.expirationDate = expirationDate;
     }
@@ -40,6 +42,9 @@ public class Url { // Usare esta clase para alimentar la Base ya con el LinkOrig
     // Getters y Setters
     public long getId() { return id; }
     public void setId(long id) { this.id = id; }
+
+    public String getTitle() { return title; }
+    public void setTitle(String title) { this.title = title; }
 
     public String getOriginalUrl() { return originalUrl; }
     public void setOriginalUrl(String originalUrl) { this.originalUrl = originalUrl; }
@@ -56,7 +61,7 @@ public class Url { // Usare esta clase para alimentar la Base ya con el LinkOrig
 
     @Override //super -> Object.
     public String toString() {
-        return "Url = { " + id + ", " + originalUrl + ", "  + shortLink + ", " 
+        return "Url = { " + id + ", " + title + ", " + originalUrl + ", "  + shortLink + ", " 
                 + creationDate + ", "  + expirationDate + " }" ;
     }
 }
