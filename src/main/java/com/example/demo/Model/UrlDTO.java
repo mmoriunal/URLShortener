@@ -1,4 +1,5 @@
 package com.example.demo.Model;
+import io.micrometer.common.util.StringUtils;
 
 /*Un DTO (Data Transfer Object) es un patrón de diseño utilizado en el desarrollo de software 
 para transferir datos entre diferentes componentes o capas de una aplicación. 
@@ -25,7 +26,7 @@ public class UrlDTO {
 
     public String getTitle() { return title; }
     public void setTitle(String title) {
-        this.title = (title.length()==0) ? "DefaultName" : title; 
+        this.title = (StringUtils.isBlank(title)) ? "DefaultName" : title; 
     }
 
     public String getUrl() { return url; }
