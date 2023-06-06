@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:th ="https://www.thymeleaf.org">
+
+<head>
+  <title>EzLink</title>
+  <style>
+    /* Estilos CSS */
+    body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    }
+
+    .header {
+    background-color: #4b89ac;
+    color: #fff;
+    padding: 20px;
+    }
+
+    .link-history-container {
+    background-color: #f5f5f5;
+    padding: 20px;
+    margin-bottom: 20px;
+    max-height: 300px;
+    overflow-y: auto;
+    }
+
+    table {
+    width: 100%;
+    border-collapse: collapse;
+    }
+
+    th, td {
+    padding: 10px;
+    text-align: left;
+    }
+
+    th {
+    background-color: #4b89ac;
+    color: #fff;
+    }
+
+    .form-container {
+    background-color: #f5f5f5;
+    padding: 20px;
+    }
+
+    .form-container input[type="text"],
+    .form-container button {
+    margin-top: 10px;
+    padding: 8px;
+    border: none;
+    border-radius: 4px;
+    }
+
+    .form-container button {
+    background-color: #4b89ac;
+    color: #fff;
+    cursor: pointer;
+    }
+
+
+
+    .scroll-container {
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+  <div class="header">
+    <h1>EZ - LINK</h1>
+  </div>
+
+  <div class="link-history-container">
+    <div class="scroll-container">
+      <table>
+        <tr>
+          <th>Título</th>
+          <th>Link acortado</th>
+          <th>Fecha de creación</th>
+        </tr>
+        <tbody id="link-list"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="form-container">
+    <form action="register" method="post">
+
+    <label for="linkoriginal">Link Original:</label>
+    <br>
+    <input type="text" name="url" placeholder="Link Original">
+    <br>
+    <br>
+    <label for="linkacortado">Link Acortado:</label>
+    <br>
+    <h5 th:text="${short}">Link Corto</h5>
+    <br>
+    <button type="submit">submit</button>
+
+  </form>
+  </div>
+
+</body>
+</html>
+
+
+<!-- <script>
+    // Historial de enlaces
+    const linkHistory = [];
+
+    // Función para crear un nuevo enlace acortado
+    function createShortLink() {
+      const titleInput = document.getElementById("title-input");
+      const urlInput = document.getElementById("url-input");
+
+      const title = titleInput.value;
+      const url = urlInput.value;
+      const date = new Date().toLocaleDateString(); // Fecha actual
+
+      const newLink = { title, url, date };
+      linkHistory.push(newLink);
+
+      // Limpiar campos de entrada
+      titleInput.value = "";
+      urlInput.value = "";
+
+      displayLink(newLink);
+    }
+
+    // Función para mostrar un enlace en la lista de historial
+    function displayLink(link) {
+      const linkList = document.getElementById("link-list");
+      const row = document.createElement("tr");
+
+      const titleCell = document.createElement("td");
+      titleCell.textContent = link.title;
+
+      const urlCell = document.createElement("td");
+      const linkUrl = document.createElement("a");
+      linkUrl.href = link.url;
+      linkUrl.textContent = link.url;
+      urlCell.appendChild(linkUrl);
+
+      const dateCell = document.createElement("td");
+      dateCell.textContent = link.date;
+
+      row.appendChild(titleCell);
+      row.appendChild(urlCell);
+      row.appendChild(dateCell);
+
+      linkList.appendChild(row);
+    }
+  </script> -->
