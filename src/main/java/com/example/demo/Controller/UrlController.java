@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import com.example.demo.Model.ErrorDTO;
+import com.example.demo.DTO.ErrorDTO;
 import com.example.demo.Model.Url;
 import com.example.demo.Service.UrlService;
 

@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.example.demo.Model.ErrorDTO;
-import com.example.demo.Model.ResponseDTO;
+import com.example.demo.DTO.ErrorDTO;
+import com.example.demo.DTO.ResponseDTO;
+import com.example.demo.DTO.UrlDTO;
 import com.example.demo.Model.Url;
-import com.example.demo.Model.UrlDTO;
 import com.example.demo.Service.UrlService;
 
 //Tambien necesito devolver vistas, entonces tengo que usar @Controller que es general.
@@ -28,7 +28,7 @@ public class ViewController {
     public String index(){ return "index"; } 
 
     // Enviar UrlOriginal y producir ShortUrl
-    @PostMapping("/register") 
+    @PostMapping("/ezlink") 
     public String generateShortLink(@ModelAttribute UrlDTO UrlDTO, Model model){
 
         ErrorDTO error = new ErrorDTO();

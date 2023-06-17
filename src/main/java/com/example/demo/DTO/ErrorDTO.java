@@ -1,4 +1,4 @@
-package com.example.demo.Model;
+package com.example.demo.DTO;
 
 public class ErrorDTO { // Usare esta clase para mandar errores (GET)
     private String status, error;

@@ -1,4 +1,4 @@
-package com.example.demo.Model;
+package com.example.demo.DTO;
 
 /*Un DTO (Data Transfer Object) es un patrón de diseño utilizado en el desarrollo de software 
 para transferir datos entre diferentes componentes o capas de una aplicación. 

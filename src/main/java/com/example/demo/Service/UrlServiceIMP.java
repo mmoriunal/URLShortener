@@ -1,6 +1,6 @@
 package com.example.demo.Service;
+import com.example.demo.DTO.UrlDTO;
 import com.example.demo.Model.Url;
-import com.example.demo.Model.UrlDTO;
 import com.example.demo.Repository.UrlRepository;
 
 import com.google.common.hash.Hashing;

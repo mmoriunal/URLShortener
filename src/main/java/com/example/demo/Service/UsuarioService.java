@@ -1,9 +1,13 @@
 package com.example.demo.Service;
 
+import com.example.demo.DTO.UsuarioRegistroDTO;
 import com.example.demo.Model.Usuario;
-import com.example.demo.Model.UsuarioRegistroDTO;
 
 public interface UsuarioService {
 
-    public Usuario saveinDB(UsuarioRegistroDTO registroDTO);
+    public void saveUsuario(UsuarioRegistroDTO registroDTO);
+
+    public Usuario findUsuarioByUsername(String Username);
+
+    //public List<URL> findAllURLs(); 
 }

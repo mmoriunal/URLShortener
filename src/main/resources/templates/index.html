@@ -1,73 +1,73 @@
 <!DOCTYPE html>
-<html xmlns:th ="https://www.thymeleaf.org">
+<html xmlns:th="https://www.thymeleaf.org">
 
 <head>
   <title>EzLink</title>
   <style>
     /* Estilos CSS */
     body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
     }
 
     .header {
-    background-color: #4b89ac;
-    color: #fff;
-    padding: 20px;
+      background-color: #4b89ac;
+      color: #fff;
+      padding: 20px;
     }
 
     .link-history-container {
-    background-color: #f5f5f5;
-    padding: 20px;
-    margin-bottom: 20px;
-    max-height: 300px;
-    overflow-y: auto;
+      background-color: #f5f5f5;
+      padding: 20px;
+      margin-bottom: 20px;
+      max-height: 300px;
+      overflow-y: auto;
     }
 
     table {
-    width: 100%;
-    border-collapse: collapse;
+      width: 100%;
+      border-collapse: collapse;
     }
 
-    th, td {
-    padding: 10px;
-    text-align: left;
+    th,
+    td {
+      padding: 10px;
+      text-align: left;
     }
 
     th {
-    background-color: #4b89ac;
-    color: #fff;
+      background-color: #4b89ac;
+      color: #fff;
     }
 
     .form-container {
-    background-color: #f5f5f5;
-    padding: 20px;
+      background-color: #f5f5f5;
+      padding: 20px;
     }
 
     .form-container input[type="text"],
     .form-container button {
-    margin-top: 10px;
-    padding: 8px;
-    border: none;
-    border-radius: 4px;
+      margin-top: 10px;
+      padding: 8px;
+      border: none;
+      border-radius: 4px;
     }
 
     .form-container button {
-    background-color: #4b89ac;
-    color: #fff;
-    cursor: pointer;
+      background-color: #4b89ac;
+      color: #fff;
+      cursor: pointer;
     }
 
 
 
     .scroll-container {
-    max-height: 300px;
-    overflow-y: auto;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+      max-height: 300px;
+      overflow-y: auto;
+      border: 1px solid #ccc;
+      border-radius: 4px;
     }
-
   </style>
 
 </head>
@@ -92,23 +92,32 @@
   </div>
 
   <div class="form-container">
-    <form action="register" method="post">
+    <form action="@{/ezlink}" method="post">
 
-    <label for="linkoriginal">Link Original:</label>
-    <br>
-    <input type="text" name="url" placeholder="Link Original">
-    <br>
-    <br>
-    <label for="linkacortado">Link Acortado:</label>
-    <br>
-    <h5 th:text="${short}">Link Corto</h5>
-    <br>
-    <button type="submit">submit</button>
+      <label for="linkoriginal">Link Original:</label>
+      <br>
+      <input type="text" name="url" placeholder="Link Original">
+      <br>
+      <br>
+      <label for="linkacortado">Link Acortado:</label>
+      <br>
+      <h5 th:text="${short}">Link Corto</h5>
+      <br>
+      <button type="submit">submit</button>
 
-  </form>
+    </form>
   </div>
 
+  <div class="form-container">
+    <form th:action="@{/logout}" method="post">
+      <input type="submit" value="Sign Out"/>
+    </form>
+  </div>
+
+  
+
 </body>
+
 </html>
 
 

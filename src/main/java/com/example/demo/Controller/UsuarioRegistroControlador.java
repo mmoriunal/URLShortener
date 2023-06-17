@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.demo.Model.UsuarioRegistroDTO;
+import com.example.demo.DTO.UsuarioRegistroDTO;
 import com.example.demo.Service.UsuarioService;
 
 @Controller
@@ -29,7 +29,7 @@ public class UsuarioRegistroControlador {
 
     @PostMapping
     public String registrarUsuario(@ModelAttribute("usuario") UsuarioRegistroDTO registroDTO){
-        usuarioService.saveinDB(registroDTO);
+        usuarioService.saveUsuario(registroDTO);
         return "redirect:/signin?exito";
     }
 }
