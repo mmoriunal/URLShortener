@@ -6,3 +6,4 @@ Para inicializar la Base de Datos conectada a la Aplicación:
 
 Para realizar pruebas, se usa el endpoint: 
 - http://localhost:8080/ezlink
+- http://localhost:8080/signin
