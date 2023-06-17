@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset = "utf-8">
+  <title> EZ LINK Log in </title>
+  <style>
+    /* CSS */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 50px auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+    }
+
+    h1 {
+      text-align: center;
+      color: #6e4ba3;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #555;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 90%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .button-container button {
+      background-color: #6e4ba3;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    .button-container button:hover {
+      background-color: #5c3d87;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Log in</h1>
+
+    <form>
+      <label for="username-input">Usuario:</label>
+      <input type="text" id="username-input" placeholder="Ingresa tu nombre de usuario 🙂">
+
+      <label for="password-input">Contraseña:</label>
+      <input type="password" id="password-input" placeholder="Ingresa tu contraseña 🙂">
+
+      <div class="button-container">
+        <a href="pruebas.html"><button type="button">Entrar a EZ LINK</button></a>
+        <a href="signin.html"><button type="button">Sign in</button></a>
+      </div>
+    </form>
+  </div>
+</body>
+</html>
