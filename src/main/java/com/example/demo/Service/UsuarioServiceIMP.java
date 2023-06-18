@@ -16,9 +16,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class UsuarioServiceIMP implements UsuarioService{
 
-    @Autowired
+    
     private UsuarioRepository usuarioRepository;
     private RoleRepository roleRepository;
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     public UsuarioServiceIMP(UsuarioRepository usuarioRepository,
@@ -35,7 +36,7 @@ public class UsuarioServiceIMP implements UsuarioService{
         usuario.setUsername(registroDTO.getUsername());
         usuario.setPassword(passwordEncoder.encode(registroDTO.getPassword()));
 
-        Role role = roleRepository.findByUsername("ROLE_ADMIN");
+        Role role = roleRepository.findByName("ROLE_ADMIN");
         if(role == null){
             role = checkRoleExist();
         }

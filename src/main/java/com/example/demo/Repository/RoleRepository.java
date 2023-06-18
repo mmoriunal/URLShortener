@@ -8,6 +8,6 @@ import com.example.demo.Model.Role;
 @Repository
 public interface RoleRepository extends JpaRepository<Role,Long> {
 
-    public Role findByUsername(String username);
+    public Role findByName(String Name);
 
 }

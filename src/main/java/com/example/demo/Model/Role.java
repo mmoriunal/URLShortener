@@ -30,6 +30,6 @@ public class Role {
     private String name;
 
     @ManyToMany(mappedBy="roles")
-    private List<Usuario> users;
+    private List<Usuario> usuarios;
 }
 

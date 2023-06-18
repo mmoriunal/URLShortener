@@ -64,7 +64,7 @@
   <div class="form-container">
     <h1> Sign in </h1>
 
-    <form th:action="@{/signin}" method="post" th:object="${usuario}">
+    <form th:action="@{/registro}" method="post" th:object="${usuario}">
       <div>
         <label class="form-group" for="username-input">Usuario:</label>
         <input class="form-control" type="text" id="username-input" th:field="*{username}" placeholder="Crea tu nombre de usuario">
