@@ -15,9 +15,9 @@ import lombok.Setter;
 public class UsuarioRegistroDTO {
     private Long id;
 
-    @NotEmpty(message = "pon userneim")
+    @NotEmpty
     private String username;
-    @NotEmpty(message = "pon paswor")
+    @NotEmpty
     private String password;
 
     @Override

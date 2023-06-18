@@ -44,7 +44,7 @@ public class MainViewController {
         return "registro";
     }
 
-    @PostMapping("/register/save")
+    @PostMapping("/registro/save")
     public String registration(@Valid @ModelAttribute("user") UsuarioRegistroDTO usuarioDto,
                                BindingResult result,
                                Model model){
@@ -57,7 +57,7 @@ public class MainViewController {
 
         if(result.hasErrors()){
             model.addAttribute("user", usuarioDto);
-            return "/registro";
+            return "/registro?error";
         }
 
         usuarioService.saveUsuario(usuarioDto);
