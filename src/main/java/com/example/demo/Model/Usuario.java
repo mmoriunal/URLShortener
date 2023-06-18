@@ -1,76 +1,105 @@
 package com.example.demo.Model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
+import java.util.Collection;
 
-/* Una entidad persistente representa una tabla en una base de datos relacional y se utiliza 
-para mapear objetos de Java a registros en dicha tabla. Cada instancia de una entidad persistente 
-representa una fila en la tabla correspondiente.
-Al marcar una clase con la anotación @Entity, se le indica a JPA que la clase debe 
-ser mapeada a una tabla en la base de datos. [Java Persistence API (JPA)] 
-
--> Posteriormente creare una clase 'REPOSITORIO' para administrar la base de datos. <- */
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "usuarios", uniqueConstraints = @UniqueConstraint(columnNames = "username"))
-public class Usuario {
-    // Llave primaria generada automaticamente (creciente)
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+@Table(name = "usuarios", uniqueConstraints = { @UniqueConstraint(columnNames = "email"), @UniqueConstraint(columnNames = "nombre") } )
+public class Usuario { // 'USER' es palabra reservada de SQL, llamar esta clase como tal inhibe la generacion de la tabla.
 
-    @Column(name = "username")
-    private String username;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Column(name = "password")
-    private String password;
-    
-    public Usuario(long id, String username, String password) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-    }
+	@Column(name = "nombre")
+	private String nombre;
 
-    public Usuario(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
+	private String email;
+	private String password;
 
-    public Usuario() {
-    } // En caso que no entre nada da null y se maneja como un 404 error
 
-    // Getters y Setters
-    public long getId() {
-        return id;
-    }
+	@ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+	@JoinTable(
+			name = "usuarios_roles",
+			joinColumns = @JoinColumn(name = "user_id",referencedColumnName = "id"),
+			inverseJoinColumns = @JoinColumn(name = "rol_asociado",referencedColumnName = "id")
+			)
+	private Collection<Rol> roles;
 
-    public void setId(long id) {
-        this.id = id;
-    }
+	
+	public Collection<Rol> getRoles() {
+		return roles;
+	}
 
-    public String getUsername() {
-        return username;
-    }
+	public void setRoles(Collection<Rol> roles) {
+		this.roles = roles;
+	}
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
-    public String getPassword() {
-        return password;
-    }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    @Override // super -> Object.
-    public String toString() {
-        return "Usuario = { " + id + ", " + username + ", " + password + " }";
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Usuario(Long id, String nombre, String email, String password, Collection<Rol> roles) {
+		super();
+		this.id = id;
+		this.nombre = nombre;
+		this.email = email;
+		this.password = password;
+		this.roles = roles;
+	}
+
+	public Usuario(String nombre, String email, String password, Collection<Rol> roles) {
+		super();
+		this.nombre = nombre;
+		this.email = email;
+		this.password = password;
+		this.roles = roles;
+	}
+
+	public Usuario() {
+		
+	}
+
 }

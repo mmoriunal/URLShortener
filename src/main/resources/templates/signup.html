@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<!-- Plantilla -->
 <head>
 <meta charset="utf-8">
-<title>EzLogIn</title>
-
+<title>EzSignUp</title>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -16,6 +14,7 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
 	integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
 	crossorigin="anonymous">
+</head>
 
 <style>
     body {
@@ -39,8 +38,8 @@
 	}
 </style>
 
-</head>
 <body>
+
 
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="navbar-container">
@@ -59,50 +58,52 @@
 
 	<br>
 	<br>
-	<br>
-	<br>
-<!-- Plantilla -->
+
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
-				<h3>Log In</h3>
-				<form th:action="@{/login}" method="post">
+				<br>
+				<br>
 
-					<div th:if=${param.error}>
-						<div class="alert alert-info">Usuario o contraseña
-							incorrectos. </div>
+				<h3>Sign Up</h3>
+				<form th:action="@{/signup}" method="post" th:object="${usuario}">
+
+					<div th:if=${param.sign1}>
+						<div class="alert alert-info">Registro exitoso.</div>
 					</div>
-
-					<div th:if=${param.logout}>
-						<div class="alert alert-success">Su sesion ha cerrado satisfactoriamente.
-						</div>
+					<div th:if=${param.sign0}>
+						<div class="alert alert-warning">El usuario ingresado ya existe.</div>
 					</div>
-
-
-					<div class="form-group">
-						<label  for="username">Usuario  </label> <input id="username"  name="username" type="text" class="form-control"
-							required autofocus="autofocus" placeholder="Ingrese su usuario por favor.">
+					<div th:if=${param.sign00}>
+						<div class="alert alert-warning">El e-mail ingresado ya esta en uso.</div>
 					</div>
 
 					<div class="form-group">
-						<label  for="password">Contraseña  </label> <input
-							id="password" type="password"  name="password" class="form-control" required
-							autofocus="autofocus" placeholder="Ingrese su contraeña por favor.">
+						<label class="control-label" for="nombre">Nombre: </label> <input
+							id="nombre" type="text" class="form-control" th:field="*{nombre}"
+							required autofocus="autofocus">
 					</div>
 
 					<div class="form-group">
-						<div class="row">
-							<div class="col-md-6 col-md-offset-3">
-								<input type="submit" class="form-control btn btn-primary" name="login-submit" id="login-submit"
-									value="Log In 🙂" />
-							</div>
-						</div>
+						<label class="control-label" for="email">E-mail: </label> <input
+							id="email" type="email" class="form-control" th:field="*{email}"
+							required autofocus="autofocus">
+					</div>
+
+					<div class="form-group">
+						<label class="control-label" for="password">Contraseña: </label> <input
+							type="password" id="password" class="form-control" th:field="*{password}"
+							required autofocus="autofocus">
+					</div>
+
+					<div class="form-group text-center d-flex"> <!-- CSS de Bootstrap para alinear el contenido. -->
+						<button type="submit" class="btn btn-success btn-block">Sign Up 🙂</button>
 					</div>
 				</form>
-				<div class="form-group">
-					<span>¿Eres nuevo? ... <a th:href="@{/signup}"> Sign Up </a></span>
-				</div>
 
+				<div class="form-group">
+				<span>¿Registrado? ...<a th:href="@{/login}"> Log In </a></span>
+				</div>
 			</div>
 		</div>
 	</div>

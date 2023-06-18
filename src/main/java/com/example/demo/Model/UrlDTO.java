@@ -12,6 +12,7 @@ public class UrlDTO {
     private String exp;  //Default: 72h
 
 
+
     public UrlDTO(String url, String exp) {
         this.url = url; this.exp = exp;
     }
@@ -22,9 +23,8 @@ public class UrlDTO {
     public String getUrl() { return url; }
     public void setUrl(String url) { this.url = url; }
 
-    public String getExpirationDate() { return exp; }
-    public void setExpirationDate(String exp) { this.exp = exp; }
-
+    public String getExp() { return exp; }
+    public void setExp(String exp) { this.exp = exp;}
 
     @Override
     public String toString() {

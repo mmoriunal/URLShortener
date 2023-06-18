@@ -5,11 +5,13 @@ import com.example.demo.Repository.UrlRepository;
 
 import com.google.common.hash.Hashing;
 
-import io.micrometer.common.util.StringUtils;
 
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -42,27 +44,35 @@ public class UrlServiceIMP implements UrlService { // Uso esta clase para implem
         return  codigo;
     }
 
-    private LocalDateTime deffExpiration(String expirationDate, LocalDateTime creationDate)
-    {
-        if( StringUtils.isBlank(expirationDate) ){ return creationDate.plusHours(72); }
-        // Si no se define una exp.date, se definen 3d por defecto.
-
-        LocalDateTime expString = LocalDateTime.parse(expirationDate); // String -> LocalDateTime
-        return expString;
+    @Override
+    public LocalDateTime deffExpiration(String exp){ // Se definen 3d por defecto.
+        LocalDateTime creationDate = LocalDateTime.now();
+        if( StringUtils.isBlank(exp) ){ return creationDate.plusDays(3); }
+        
+        try{
+            int e = Integer.parseInt(exp);
+            return creationDate.plusDays(e);
+        }catch( Exception e ){return creationDate.plusDays(3);}
     }
 
 
     // Funciones definidas en la Clase de SERVICIO (UrlService)
     @Override
-    public Url generateShortLink(UrlDTO UrlDTO) { //UrlDTO -> OriginalUrl
+    public Url generateShortLink(UrlDTO UrlDTO, String userLink) { //UrlDTO -> OriginalUrl
 
-        if( StringUtils.isNotBlank(UrlDTO.getUrl()) ) //Evalúa si es un whitespace, es nulo o está vacío ("").
-        {
+        if( StringUtils.isNotBlank(UrlDTO.getUrl()) ) { //Evalúa si es un whitespace, es nulo o está vacío ("").
+
             String codigo = encodeUrl(UrlDTO.getUrl()); // Primero saco el codigo a asociar.
 
             Url url = new Url();
-            url.setCreationDate(LocalDateTime.now());  
-            url.setExpirationDate( deffExpiration( UrlDTO.getExpirationDate(), url.getCreationDate() ) );
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDateTime hoy = LocalDateTime.now(), exp = deffExpiration( UrlDTO.getExp() );
+            String str_hoy = hoy.format(formatter), str_exp = exp.format(formatter);
+
+            url.setUserLink(userLink);
+            url.setCreationDate(str_hoy);  
+            url.setExpirationDate(str_exp);
             url.setOriginalUrl(UrlDTO.getUrl()); 
             url.setShortLink(codigo); // Luego defino la fila a insertar en la Base
             
@@ -89,5 +99,22 @@ public class UrlServiceIMP implements UrlService { // Uso esta clase para implem
 
     @Override 
     public void deleteShortLink(Url url) { DB.delete(url); } // Hereda de JpaRepository<Url,Long>
+
+    @Override
+    public ArrayList<Url> listaUrl(String current){
+        ArrayList<Url> links = DB.findAllByUserLink(current);
+        System.out.println(links);
+        return links;
+    }
+
+    @Override
+    public ArrayList<Url> linksDuplicados(String original){
+        return DB.findAllByOriginalUrl(original);
+    }
+
+    @Override
+    public boolean hayDuplicado(String original){
+        return DB.existsByOriginalUrl(original);
+    }
 
 }
