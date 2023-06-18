@@ -1,14 +1,13 @@
 package com.example.demo.Model;
-import java.time.LocalDateTime;
 
 
 public class ResponseDTO { // Usare esta clase para mandar los ShortLinks y la caducidad al usuario. (GET)
     private String originalUrl;
     private String shortLink;
-    private LocalDateTime expirationDate;
+    private String expirationDate;
 
 
-    public ResponseDTO(String originalUrl, String shortLink, LocalDateTime expirationDate) {
+    public ResponseDTO(String originalUrl, String shortLink, String expirationDate) {
         this.originalUrl = originalUrl; this.shortLink = shortLink;
         this.expirationDate = expirationDate;
     }
@@ -22,8 +21,8 @@ public class ResponseDTO { // Usare esta clase para mandar los ShortLinks y la c
     public String getShortLink() { return shortLink; }
     public void setShortLink(String shortLink) { this.shortLink = shortLink; }
 
-    public LocalDateTime getExpirationDate() { return expirationDate; }
-    public void setExpirationDate(LocalDateTime expirationDate) { this.expirationDate = expirationDate; }
+    public String getExpirationDate() { return expirationDate; }
+    public void setExpirationDate(String expirationDate) { this.expirationDate = expirationDate; }
 
 
     @Override

@@ -1,19 +1,21 @@
 package com.example.demo.Controller;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
+import com.example.demo.Model.ErrorDTO;
+import com.example.demo.Model.Url;
+import com.example.demo.Service.UrlService;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import com.example.demo.Model.ErrorDTO;
-import com.example.demo.Model.Url;
-import com.example.demo.Service.UrlService;
-
-import io.micrometer.common.util.StringUtils;
-import jakarta.servlet.http.HttpServletResponse;
 
 /* @RestController devolveria directamente objetos que son respuestas HTTP (JSON)
  * Hace mas facil los servicios web RESTful al eliminar la necesidad de anotar cada método con @ResponseBody.
@@ -35,7 +37,10 @@ public class UrlController {
         // sendRedirect(String location): Redirige al cliente a otra URL especificada.
 
         Url response = UrlService.findOriginal(codigo); 
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDateTime hoy = LocalDateTime.now();
+        String str_hoy = hoy.format(formatter);
 
         ErrorDTO error = new ErrorDTO(); error.setStatus("400");
         Boolean flag = false;
@@ -44,7 +49,7 @@ public class UrlController {
             error.setError("Este link esta vacio. Porfavor ingrese uno valido :D");
             flag = true;
         }
-        else if( response.getExpirationDate().isBefore(hoy) ){
+        else if( response.getExpirationDate().compareTo(str_hoy) < 0 ){
             error.setError("Link caducado. Porfavor cree uno nuevo :D");
             UrlService.deleteShortLink(response); //Eliminar link caducado
 

@@ -1,0 +1,19 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #e8fafc;
+  }
+  .navbar-container a{
+      font-family: 'Nunito', sans-serif;
+      font-size: 19.5px;
+  }
+
+  h3{
+      font-family: 'Nunito', sans-serif;
+      font-size: 23px;
+      font-weight: 600;
+      color: #293c8f;
+  }
+  label{
+      color: #0b1b63;
+  }

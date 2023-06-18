@@ -1,17 +1,23 @@
 package com.example.demo.Repository;
 
+import java.util.*;
+
+//import org.hibernate.mapping.List;
 import org.springframework.data.jpa.repository.JpaRepository;  
 import org.springframework.stereotype.Repository;
 // JpaRepository, que es una interfaz proporcionada por Spring Data JPA para realizar operaciones CRUD
 
 import com.example.demo.Model.Url;
 
-@Repository                   // < Entidad a buscar, tipo de identificador (key) >
+@Repository                   // < Entidad a buscar, tipo de identificador (id) >
 public interface UrlRepository extends JpaRepository<Url,Long> {
 
     // Cuando se llama a este método, Spring Data JPA generará automáticamente una consulta SQL 
     public Url findByShortLink(String shortLink);
+    public ArrayList<Url> findAllByUserLink(String userLink);
 
+    public boolean existsByOriginalUrl(String original);
+    public ArrayList<Url> findAllByOriginalUrl(String original);
 }
 
     /* En escencia solo necesito implementar un metodo que me permita hacer 
