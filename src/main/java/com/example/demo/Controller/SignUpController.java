@@ -43,7 +43,7 @@ public class SignUpController {
 		}
 
 		userService.saveUser(userDTO);
-		emailSender.sendEmailBienvenida(email);
+		emailSender.sendEmailBienvenida(email, nombre);
 		return "redirect:/signup?sign1"; 
 	}
 
