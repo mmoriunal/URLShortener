@@ -20,6 +20,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	@Autowired
 	private UserService usuarioServicio;
 	
+	/*@Bean se utiliza para indicar que un método de configuración en una clase de configuración de Spring
+	 debe ser tratado como un método de fábrica de objetos gestionados por Spring. */
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() { //Como vamos a codificar la contraseña
 		return new BCryptPasswordEncoder();

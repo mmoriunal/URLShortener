@@ -88,7 +88,7 @@ public class IndexContoller {
         //No uso @Autowired para UrlDTO porque necesito una instancia per se para recibir como respuesta.
         Url dbUrl = urlService.generateShortLink(UrlDTO, current); 
         String original = dbUrl.getOriginalUrl();
-        String shortUrl = "http://localhost:8080/" + dbUrl.getShortLink();
+        String shortUrl = dbUrl.getShortLink();
         String exp = dbUrl.getExpirationDate();
 
         ResponseDTO response = new ResponseDTO(original, shortUrl, exp); 

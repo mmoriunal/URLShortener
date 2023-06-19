@@ -74,7 +74,7 @@ public class UrlServiceIMP implements UrlService { // Uso esta clase para implem
             url.setCreationDate(str_hoy);  
             url.setExpirationDate(str_exp);
             url.setOriginalUrl(UrlDTO.getUrl()); 
-            url.setShortLink(codigo); // Luego defino la fila a insertar en la Base
+            url.setShortLink("http://localhost:8080/" + codigo); // Luego defino la fila a insertar en la Base
             
             Url responseUrl = saveinDB(url); // Por ultimo envio la Url a la DB.
 
