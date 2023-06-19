@@ -31,7 +31,7 @@ import javax.persistence.PersistenceException;
 public class UserServiceIMP implements UserService {
 
 	@Autowired
-	private UserRepository userRepository;
+	private UserRepository DB;
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 
@@ -46,7 +46,7 @@ public class UserServiceIMP implements UserService {
 											passwordEncoder.encode(registroDTO.getPassword()),
 											Arrays.asList(new Rol("cliente"))
 											);
-			return userRepository.save(usuario); }
+			return DB.save(usuario); }
 		catch (PersistenceException e){
 			Throwable cause = e.getCause();
 			if( cause instanceof ConstraintViolationException ){ throw (PersistenceException) cause ;}
@@ -56,21 +56,30 @@ public class UserServiceIMP implements UserService {
 		return null;
 	}
 
+	/* 
+	Implementación del método loadUserByUsername de la interfaz UserDetailsService en Spring
+	Se utiliza para cargar los detalles del usuario por su nombre de usuario.
+	Puede lanzar una excepción UsernameNotFoundException si el usuario no existe.
+	*/
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException { //POST Method para LogIn
-		Usuario usuario = userRepository.findByNombre(username);
+		Usuario usuario = DB.findByNombre(username);
 		if(usuario == null) {
 			throw new UsernameNotFoundException("Usuario o contraseña inválidos");
 		}
 		//	User: principal; Arg1: username; Arg2: password; Arg3: Role Authorization
 		return new User(usuario.getNombre(),usuario.getPassword(), mapearAutoridadesRoles(usuario.getRoles()));
+		/* Se crea un nuevo objeto User, util para mapear los roles a una colección de objetos GrantedAuthority.  */
 	}
 
 	private Collection<? extends GrantedAuthority> mapearAutoridadesRoles(Collection<Rol> roles){
 		return roles.stream().map(role -> new SimpleGrantedAuthority(role.getNombre())).collect(Collectors.toList());
 	}
 
-
+	
+	/* Puedo acceder al usuario autenticado utilizando la clase SecurityContextHolder y el método getContext().
+	* A partir de ahí, obtener los detalles del usuario autenticado utilizando el método getAuthentication(),
+	* y finalmente obtener el objeto PRINCIPAL que representa al usuario autenticado. */
 	@Override
 	public String getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -86,23 +95,17 @@ public class UserServiceIMP implements UserService {
 
 	@Override
 	public List<Usuario> listarUsuarios() {
-		return userRepository.findAll();
+		return DB.findAll();
 	}
 
 	@Override
 	public boolean nombreDuplicado(String nombre) {
-		return userRepository.existsByNombre(nombre);
+		return DB.existsByNombre(nombre);
 	}
 
 	@Override
 	public boolean emailDuplicado(String email) {
-		return userRepository.existsByEmail(email);
+		return DB.existsByEmail(email);
 	}
 
 }
-
-
-/*
- * UserDetails es una interfaz que define los métodos para acceder a los detalles de un usuario en el contexto de Spring Security.
- * Proporciona métodos para obtener el nombre de usuario, la contraseña, los roles y autorizaciones, y otra información relacionada con el usuario.
- */

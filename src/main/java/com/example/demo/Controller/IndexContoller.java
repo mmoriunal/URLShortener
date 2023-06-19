@@ -48,28 +48,46 @@ public class IndexContoller {
         String current = userService.getCurrentUser();
         model.addAttribute("links", urlService.listaUrl(current));
 
-        ErrorDTO error = new ErrorDTO();
-        if (StringUtils.isBlank(UrlDTO.getUrl()) ){ 
+
+        ErrorDTO error = new ErrorDTO(); error.setStatus("HTTP 404");
+        String linkOriginal = UrlDTO.getUrl();
+        String diasExp = UrlDTO.getExp();
+
+
+        if (StringUtils.isBlank(linkOriginal) ){ 
             error.setError("Porfavor ingrese una URL :)");
-            error.setStatus("HTTP 404");
 
             model.addAttribute("short", error.getError());
             return "index";
         }
-        if ( ! UrlDTO.getUrl().contains(".com") ){ 
+        if ( ! linkOriginal.contains(".com") ){ 
             error.setError("Porfavor ingrese una URL valida :)");
-            error.setStatus("HTTP 404");
 
             model.addAttribute("short", error.getError());
             return "index";
         }
 
+        try{
+            int i = Integer.parseInt(diasExp);
+            if (i <= 0){ 
+                error.setError("Porfavor ingrese un tiempo de vigencia valido :)");
 
-        if( urlService.hayDuplicado(UrlDTO.getUrl()) ){
-            ArrayList<Url> duplicados = urlService.linksDuplicados(UrlDTO.getUrl());
+                model.addAttribute("short", error.getError());
+                return "index";
+            }
+        }
+        catch( Exception e ){ // Si no se puede convertir en int, en todo caso es invalido
+            error.setError("Porfavor ingrese un tiempo de vigencia valido :)");
+
+            model.addAttribute("short", error.getError());
+            return "index";
+        }
+
+        if( urlService.hayDuplicado(linkOriginal) ){
+            ArrayList<Url> duplicados = urlService.linksDuplicados(linkOriginal);
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-            LocalDateTime tentativa = urlService.deffExpiration(UrlDTO.getExp());
+            LocalDateTime tentativa = urlService.deffExpiration(diasExp);
             String str_exp1 = tentativa.format(formatter);
             for( Url duplicado : duplicados ){
 
@@ -94,15 +112,9 @@ public class IndexContoller {
         ResponseDTO response = new ResponseDTO(original, shortUrl, exp); 
         model.addAttribute("short", response.getShortLink());
 
-        model.addAttribute("links", urlService.listaUrl(current)); //Actualizar tabla inmediatamente si hubo creacion exitosa
+        model.addAttribute("links", urlService.listaUrl(current)); //Actualizar tabla inmediatamente, si hubo creacion exitosa.
+        model.addAttribute("urldto", new UrlDTO());// Cuando hay exito, se resetea el input visualmente.
 
         return "index";
     }
 }
-
-
-/*
- * Puedes acceder al usuario autenticado utilizando la clase SecurityContextHolder y el método getContext().
- * A partir de ahí, puedes obtener los detalles del usuario autenticado utilizando el método getAuthentication(),
- * y finalmente obtener el objeto PRINCIPAL que representa al usuario autenticado.
- */

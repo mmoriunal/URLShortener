@@ -21,3 +21,8 @@ public interface UserService extends UserDetailsService{
  * cuando un usuario intenta iniciar sesión en una aplicación. Spring Security utiliza estos detalles para verificar los Roles del usuario
  * y determinar sus autorizaciones y permisos; realizando consultas a una Base de Datos. 
  */
+
+ /*
+ * UserDetails es una interfaz que define los métodos para acceder a los detalles de un usuario en el contexto de Spring Security.
+ * Proporciona métodos para obtener el nombre de usuario, la contraseña, los roles y autorizaciones, y otra información relacionada con el usuario.
+ */
