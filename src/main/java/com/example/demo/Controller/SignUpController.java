@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.Model.UserDTO;
+import com.example.demo.Service.EmailSenderService;
 import com.example.demo.Service.UserService;
 
 @Controller
@@ -17,6 +18,8 @@ public class SignUpController {
 
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private EmailSenderService emailSender;
 	
 	@ModelAttribute("usuario")
 	public UserDTO newUserDTO() {
@@ -40,6 +43,7 @@ public class SignUpController {
 		}
 
 		userService.saveUser(userDTO);
+		emailSender.sendEmailBienvenida(email);
 		return "redirect:/signup?sign1"; 
 	}
 
