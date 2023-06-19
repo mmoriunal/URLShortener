@@ -49,6 +49,18 @@ public class IndexContoller {
         model.addAttribute("links", urlService.listaUrl(current));
 
         ErrorDTO error = new ErrorDTO();
+
+        try{
+            int e = Integer.parseInt(UrlDTO.getExp());
+            if ( e<0 ){ 
+            error.setError("Porfavor ingrese dias de vigencia valido :)");
+            error.setStatus("HTTP 404");
+
+            model.addAttribute("short", error.getError());
+            return "index";
+        }
+        }catch( Exception e ){}//si no se puede convertir en int, urlservice se hace cargo
+
         if (StringUtils.isBlank(UrlDTO.getUrl()) ){ 
             error.setError("Porfavor ingrese una URL :)");
             error.setStatus("HTTP 404");
@@ -95,6 +107,8 @@ public class IndexContoller {
         model.addAttribute("short", response.getShortLink());
 
         model.addAttribute("links", urlService.listaUrl(current)); //Actualizar tabla inmediatamente si hubo creacion exitosa
+    
+        model.addAttribute("urldto", new UrlDTO());//cuando hay exito, se resetea el input visualmente
 
         return "index";
     }
