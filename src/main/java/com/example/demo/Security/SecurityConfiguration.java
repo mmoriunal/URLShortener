@@ -40,6 +40,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception { // Configura las rutas y tipos de archivos que serán accesibles sin autenticación.
+		http.authorizeRequests().antMatchers("/h2-console/**").permitAll()
+        .and().csrf().ignoringAntMatchers("/h2-console/**")
+        .and().headers().frameOptions().sameOrigin(); //config. para excluir a h2-console
 		http.authorizeRequests().antMatchers(
 											"/signup**",
 											"/js/**",
