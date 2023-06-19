@@ -14,7 +14,7 @@ public class EmailSenderService {
     public void sendEmailBienvenida(String receiverEmail, String nombre) {
         SimpleMailMessage message = new SimpleMailMessage();
 
-        String titulo = "Bienvenido a EzLink!!!!1!!11!1!1";
+        String titulo = "¡Bienvenido a EzLink!";
         String mensaje = "Hola " + nombre +"!," +
                     "\n\nGracias por registrarte a EzLink. Apreciamos tu interés por este proyecto." +
                     "\n\nNuestra intención es brindarte el mejor servicio posible, asi que por favor no dudes en comunicarte con nosotros (ignora el .noreply). Queremos esuchar tus comentarios." +

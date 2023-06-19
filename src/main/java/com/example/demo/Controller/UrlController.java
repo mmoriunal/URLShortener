@@ -36,7 +36,7 @@ public class UrlController {
         // HttpServletResponse interfaz para las respuestas enviadas de un Servidor a un Cliente.
         // sendRedirect(String location): Redirige al cliente a otra URL especificada.
 
-        Url response = UrlService.findOriginal(codigo); 
+        Url response = UrlService.findOriginal("http://localhost:8080/" + codigo); 
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDateTime hoy = LocalDateTime.now();
