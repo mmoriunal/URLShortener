@@ -34,12 +34,16 @@ public class SignUpController {
 	@PostMapping
 	public String register(@ModelAttribute("usuario") UserDTO userDTO) {
 		String nombre = userDTO.getNombre(), email = userDTO.getEmail();
+		String pswd = userDTO.getPassword();
 
 		if( userService.nombreDuplicado(nombre) ){
 			return "redirect:/signup?sign0";
 		}
 		if( userService.emailDuplicado(email) ){
 			return "redirect:/signup?sign00";
+		}
+		if( pswd.length() < 8 ){
+			return "redirect:/signup?sign000";
 		}
 
 		userService.saveUser(userDTO);

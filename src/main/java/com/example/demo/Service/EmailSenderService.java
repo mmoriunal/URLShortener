@@ -15,7 +15,7 @@ public class EmailSenderService {
         SimpleMailMessage message = new SimpleMailMessage();
 
         String titulo = "¡Bienvenido a EzLink!";
-        String mensaje = "Hola " + nombre +"!," +
+        String mensaje = "Hola " + nombre.toUpperCase() +"!" +
                     "\n\nGracias por registrarte a EzLink. Apreciamos tu interés por este proyecto." +
                     "\n\nNuestra intención es brindarte el mejor servicio posible, asi que por favor no dudes en comunicarte con nosotros (ignora el .noreply). Queremos esuchar tus comentarios." +
                     "\n\nSin nada más que decirte, disfruta de EzLink y por favor no dudes en recomendarnos (y donar :D )." +

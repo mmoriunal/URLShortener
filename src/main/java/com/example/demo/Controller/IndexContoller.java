@@ -30,6 +30,7 @@ public class IndexContoller {
 	@Autowired
 	private UrlService urlService;
 
+
 	@ModelAttribute("urldto")
 	public UrlDTO newUrlDTO() { return new UrlDTO(); }
 	
@@ -41,6 +42,7 @@ public class IndexContoller {
 		return "index";
 	}
 
+    
     // Enviar UrlOriginal y producir ShortUrl
     @PostMapping
     public String generateShortLink(@ModelAttribute("urldto") UrlDTO UrlDTO, Model model){
@@ -67,20 +69,22 @@ public class IndexContoller {
             return "index";
         }
 
-        try{
-            int i = Integer.parseInt(diasExp);
-            if (i <= 0){ 
+        if( ! StringUtils.isBlank(diasExp) ){
+            try{
+                int i = Integer.parseInt(diasExp);
+                if (i <= 0){ 
+                    error.setError("Porfavor ingrese un tiempo de vigencia valido :)");
+
+                    model.addAttribute("short", error.getError());
+                    return "index";
+                }
+            }
+            catch( Exception e ){ // Si no se puede convertir en int, en todo caso es invalido
                 error.setError("Porfavor ingrese un tiempo de vigencia valido :)");
 
                 model.addAttribute("short", error.getError());
                 return "index";
             }
-        }
-        catch( Exception e ){ // Si no se puede convertir en int, en todo caso es invalido
-            error.setError("Porfavor ingrese un tiempo de vigencia valido :)");
-
-            model.addAttribute("short", error.getError());
-            return "index";
         }
 
         if( urlService.hayDuplicado(linkOriginal) ){
